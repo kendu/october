@@ -7,15 +7,7 @@
 ## First Run
 
 ```
-fig up
-
-docker run \
-    -d \
-    --restart always \
-    --name proxy \
-    -p 80:80 \
-    -v /var/run/docker.sock:/tmp/docker.sock \
-    jwilder/nginx-proxy || true
+./provision/setup.sh
 ```
 
 ## Concatanous runs
