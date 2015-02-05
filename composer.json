@@ -1,0 +1,10 @@
+{
+    "name": "october",
+    "description": "October CMS.",
+    "keywords": ["cms", "october"],
+    "license": "MIT",
+    "require": {
+        "october/october": "dev-master"
+    },
+    "minimum-stability": "dev"
+}

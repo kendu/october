@@ -1,0 +1,40 @@
+http:
+  image: nginx
+  volumes:
+    # Make sure we use custom files that can be easily modifed
+    # and applied later.
+    # Note: Changing paths here requires container removal & recreation!
+    # $> docker rm irams_http_1 && fig up
+    - ./provision/nginx/dev/nginx.conf:/etc/nginx/nginx.conf
+    - ./provision/nginx/dev/sites-enabled:/etc/nginx/conf.d
+
+    # Map web root
+    - .:/opt/web
+  environment:
+    - VIRTUAL_HOST=october.local
+  links:
+    - app
+
+  hostname:   october.local
+
+app:
+  image: kendu/php:5.6
+  volumes:
+    # Make sure we use custom files that can be easily modifed
+    # and applied later
+    - ./provision/php/dev/php-fpm.conf:/etc/php5/fpm/php-fpm.conf
+    - ./provision/php/dev/pool.conf:/etc/php5/fpm/pool.d/dev.conf
+    - ./provision/php/dev/php.ini:/etc/php5/fpm/conf.d/99.custom.ini
+    # Map app
+    - .:/opt/web
+  links:
+    - db
+  hostname:   october.local
+
+db:
+  image: kendu/postgresql:9.4
+  environment:
+    # Env variables that will make life with psql easier:
+    - PGHOST=db
+    - PGDATABASE=october
+    - PGUSER=october
