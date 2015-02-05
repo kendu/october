@@ -23,6 +23,8 @@ function importData() {
 	# Import tables - schemas
 	docker run -it --rm \
 	--link ${DBCONTAINER}:db \
+	-v $(pwd):/opt/web \
+	-w /opt/web \
 	kendu/postgresql:9.4 \
 	bash provision/postgresql/prepareDB.sh || exit 1
 
